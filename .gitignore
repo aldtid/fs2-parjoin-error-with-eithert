@@ -2,3 +2,6 @@
 *.log
 target/
 project/project/
+.bloop/
+.metals/
+
