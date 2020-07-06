@@ -1,0 +1,5 @@
+= FS2 parJoin error with EitherT
+
+If a stream of streams with an EitherT context (something like `Stream[EitherT[IO, Throwable, *], Stream[EitherT[IO, Throwable, *]], String]`) is tried to be parallelized, the stream evaluation gets stuck on `Stream#parJoin` function if effect evaluates as a left, maybe due to some deadlock relative to function inner signals and semaphores.
+
+Run `sbt test` to run the tests. The test `parallelize should not block while parallelizing a stream of streams using EitherT[IO, Throwable, *] as context if context is a Left` will fail due to not being able to finish the execution in time.

@@ -11,4 +11,9 @@ object join {
     
       Stream.emits(elements).map(streamF).parJoinUnbounded
 
+    def sequential[F[_], I, O](elements: List[I],
+                               streamF: I => Stream[F, O]): Stream[F, O] =
+    
+      Stream.emits(elements).flatMap(streamF)
+
 }
