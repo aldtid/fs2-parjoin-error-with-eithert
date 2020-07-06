@@ -46,7 +46,7 @@ class JoinTest extends AnyFlatSpec with Matchers {
 
   }
 
-  it should "not block while parallelizing a stream of streams using EitherT[IO, Throwable, *] as context if context is a Left" in {
+  it should "not block while parallelizing a stream of streams using EitherT[IO, Throwable, *] as context if effect evaluates as a left" in {
 
     def f(int: Int): Stream[EF, String] =
       if (int % 2 != 0) Stream(int.toString) else Stream.eval[EF, String](EitherT.leftT(IntThrowable(int)))
@@ -61,7 +61,7 @@ class JoinTest extends AnyFlatSpec with Matchers {
 
   }
 
-  "sequential" should "not block while parallelizing a stream of streams using IO as context" in {
+  "sequential" should "not block while running a stream using IO as context" in {
 
     def f(int: Int): Stream[IO, String] = Stream(int.toString)
 
@@ -70,7 +70,7 @@ class JoinTest extends AnyFlatSpec with Matchers {
 
   }
 
-  it should "not block while parallelizing a stream of streams using EitherT[IO, Throwable, *] as context" in {
+  it should "not block while running a stream using EitherT[IO, Throwable, *] as context" in {
 
     def f(int: Int): Stream[EF, String] = Stream(int.toString)
 
@@ -84,7 +84,7 @@ class JoinTest extends AnyFlatSpec with Matchers {
 
   }
 
-  it should "not block while parallelizing a stream of streams using EitherT[IO, Throwable, *] as context if context is a Left" in {
+  it should "not block while running a stream using EitherT[IO, Throwable, *] as context if effect evaluates as a left" in {
 
     def f(int: Int): Stream[EF, String] =
       if (int % 2 != 0) Stream(int.toString) else Stream.eval[EF, String](EitherT.leftT(IntThrowable(int)))
